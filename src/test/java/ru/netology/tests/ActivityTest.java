@@ -10,6 +10,7 @@ import java.net.URL;
 
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import ru.netology.pages.MainActivityPage;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ActivityTest {
@@ -31,7 +32,7 @@ public class ActivityTest {
         driver = new AppiumDriver(remoteUrl, desiredCapabilities);
     }
 
-    @Test
+   /* @Test
     public void dontSetEmptyString() {
         MobileElement el1 = (MobileElement) driver.findElementById("userInput");
         el1.click();
@@ -51,9 +52,29 @@ public class ActivityTest {
         el1.sendKeys(" test");
         MobileElement el4 = (MobileElement) driver.findElementById("buttonActivity");
         el4.click();
-        MobileElement el5 = (MobileElement) driver.findElementById("text");
+        MobileElement el5 = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[2]/android.widget.FrameLayout/android.widget.TextView");
 
         Assertions.assertEquals(" test", el5.getText());
+    }*/
+
+
+
+    @Test
+    public void dontSetEmptyString() {
+        MainActivityPage page = new MainActivityPage(driver);
+        page.userInput.sendKeys(" ");
+        page.buttonChange.click();
+        Assertions.assertEquals("Hello UiAutomator!", page.textToBeChanged.getText());
+
+    }
+
+    @Test
+    public void activityTest() {
+        MainActivityPage page = new MainActivityPage(driver);
+        page.userInput.sendKeys("test");
+        page.buttonActivity.click();
+        Assertions.assertEquals("test", page.activityText.getText());
+
     }
 
     @AfterAll
